@@ -1,7 +1,6 @@
 package dev.foxgirl.leashplayers.mixin;
 
 import dev.foxgirl.leashplayers.LeashProxyEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.TurtleEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

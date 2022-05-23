@@ -135,7 +135,7 @@ public abstract class MixinServerPlayerEntity implements LeashImpl {
         if (leashplayers$disabled()) return ActionResult.PASS;
 
         var stack = player.getStackInHand(hand);
-        if (stack.isOf(Items.LEAD) && leashplayers$holder == null) {
+        if (stack.getItem() == Items.LEAD && leashplayers$holder == null) {
             if (!player.isCreative()) {
                 stack.decrement(1);
             }

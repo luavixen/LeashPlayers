@@ -1,12 +1,9 @@
 package dev.foxgirl.leashplayers;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 
 import java.util.Objects;
 
@@ -98,15 +95,6 @@ public final class LeashProxyEntity extends TurtleEntity {
 
     @Override
     protected void initGoals() {
-    }
-
-    @Override
-    public void calculateDimensions() {
-    }
-
-    @Override
-    public EntityDimensions getDimensions(EntityPose pose) {
-        return new EntityDimensions(0.0F, 0.0F, true);
     }
 
     @Override
