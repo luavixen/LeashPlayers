@@ -6,6 +6,7 @@ import dev.foxgirl.leashplayers.LeashProxyEntity;
 import dev.foxgirl.leashplayers.LeashSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -48,8 +49,8 @@ public abstract class MixinServerPlayerEntity implements LeashImpl {
                 leashplayers$proxy = null;
             }
             else {
-                var holderActual = leashplayers$holder;
-                var holderTarget = leashplayers$proxy.getHoldingEntity();
+                Entity holderActual = leashplayers$holder;
+                Entity holderTarget = leashplayers$proxy.getHoldingEntity();
 
                 if (holderTarget == null && holderActual != null) {
                     leashplayers$detach();
@@ -65,12 +66,12 @@ public abstract class MixinServerPlayerEntity implements LeashImpl {
     }
 
     private void leashplayers$apply() {
-        var player = leashplayers$self;
-        var holder = leashplayers$holder;
+        ServerPlayerEntity player = leashplayers$self;
+        Entity holder = leashplayers$holder;
         if (holder == null) return;
         if (holder.world != player.world) return;
 
-        var distance = player.distanceTo(holder);
+        float distance = player.distanceTo(holder);
         if (distance < leashplayers$settings.getDistanceMin()) {
             return;
         }
@@ -80,9 +81,9 @@ public abstract class MixinServerPlayerEntity implements LeashImpl {
             return;
         }
 
-        var dx = (holder.getX() - player.getX()) / (double) distance;
-        var dy = (holder.getY() - player.getY()) / (double) distance;
-        var dz = (holder.getZ() - player.getZ()) / (double) distance;
+        double dx = (holder.getX() - player.getX()) / (double) distance;
+        double dy = (holder.getY() - player.getY()) / (double) distance;
+        double dz = (holder.getZ() - player.getZ()) / (double) distance;
 
         player.addVelocity(
             Math.copySign(dx * dx * 0.4D, dx),
@@ -134,7 +135,7 @@ public abstract class MixinServerPlayerEntity implements LeashImpl {
     public ActionResult leashplayers$interact(PlayerEntity player, Hand hand) {
         if (leashplayers$disabled()) return ActionResult.PASS;
 
-        var stack = player.getStackInHand(hand);
+        ItemStack stack = player.getStackInHand(hand);
         if (stack.getItem() == Items.LEAD && leashplayers$holder == null) {
             if (!player.isCreative()) {
                 stack.decrement(1);

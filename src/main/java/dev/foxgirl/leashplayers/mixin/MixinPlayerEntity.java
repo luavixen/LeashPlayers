@@ -16,10 +16,9 @@ public abstract class MixinPlayerEntity {
     @Inject(method = "interact(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at = @At("RETURN"), cancellable = true)
     private void leashplayers$onInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info) {
         if (info.getReturnValue() != ActionResult.PASS) return;
-        if (
-            (Object) this instanceof ServerPlayerEntity player &&
-            (Object) entity instanceof LeashImpl impl
-        ) {
+        if ((Object) this instanceof ServerPlayerEntity && entity instanceof LeashImpl) {
+            ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+            LeashImpl impl = (LeashImpl) entity;
             info.setReturnValue(impl.leashplayers$interact(player, hand));
             info.cancel();
         }

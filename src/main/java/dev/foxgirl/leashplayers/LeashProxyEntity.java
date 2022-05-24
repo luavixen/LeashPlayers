@@ -4,6 +4,10 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.scoreboard.ServerScoreboard;
+import net.minecraft.scoreboard.Team;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
@@ -16,8 +20,8 @@ public final class LeashProxyEntity extends TurtleEntity {
         if (target == null) return true;
         if (target.world != world || !target.isAlive()) return true;
 
-        var posActual = getPos();
-        var posTarget = target.getPos().add(0.0D, 1.3D, -0.15D);
+        Vec3d posActual = getPos();
+        Vec3d posTarget = target.getPos().add(0.0D, 1.3D, -0.15D);
 
         if (!Objects.equals(posActual, posTarget)) {
             setRotation(0.0F, 0.0F);
@@ -63,11 +67,11 @@ public final class LeashProxyEntity extends TurtleEntity {
         setInvisible(true);
         noClip = true;
 
-        var server = this.getServer();
+        MinecraftServer server = this.getServer();
         if (server != null) {
-            var scoreboard = server.getScoreboard();
+            ServerScoreboard scoreboard = server.getScoreboard();
 
-            var team = scoreboard.getTeam(TEAM_NAME);
+            Team team = scoreboard.getTeam(TEAM_NAME);
             if (team == null) {
                 team = scoreboard.addTeam(TEAM_NAME);
             }
@@ -75,7 +79,7 @@ public final class LeashProxyEntity extends TurtleEntity {
                 team.setCollisionRule(AbstractTeam.CollisionRule.NEVER);
             }
 
-            scoreboard.addPlayerToTeam(this.getEntityName(), team);
+            scoreboard.addPlayerToTeam(getEntityName(), team);
         }
     }
 
