@@ -25,7 +25,8 @@ public final class LeashProxyEntity extends TurtleEntity {
 
         if (!Objects.equals(posActual, posTarget)) {
             setRotation(0.0F, 0.0F);
-            setPosition(posTarget);
+            setPos(posTarget.getX(), posTarget.getY(), posTarget.getZ());
+            setBoundingBox(getDimensions(EntityPose.DYING).getBoxAt(posTarget));
         }
 
         updateLeash();
