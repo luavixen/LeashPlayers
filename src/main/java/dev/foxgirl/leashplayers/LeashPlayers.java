@@ -1,16 +1,19 @@
 package dev.foxgirl.leashplayers;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.fabricmc.fabric.api.gamerule.v1.rule.DoubleRule;
+import dev.foxgirl.leashplayers.mixin.AccessorGameRules;
+import dev.foxgirl.leashplayers.mixin.AccessorGameRules$BooleanRule;
+import dev.foxgirl.leashplayers.mixin.AccessorGameRules$IntRule;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-public final class LeashPlayers implements ModInitializer {
+@Mod("leashplayers")
+public final class LeashPlayers {
     private static GameRules.Key<GameRules.BooleanRule> ruleEnabled;
-    private static GameRules.Key<DoubleRule> ruleDistanceMin;
-    private static GameRules.Key<DoubleRule> ruleDistanceMax;
+    private static GameRules.Key<GameRules.IntRule> ruleDistanceMin;
+    private static GameRules.Key<GameRules.IntRule> ruleDistanceMax;
 
     public static LeashSettings getSettings(World world) {
         return new LeashSettings() {
@@ -35,10 +38,13 @@ public final class LeashPlayers implements ModInitializer {
         };
     }
 
-    @Override
-    public void onInitialize() {
-        ruleEnabled = GameRuleRegistry.register("leashPlayersEnabled", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
-        ruleDistanceMin = GameRuleRegistry.register("leashPlayersDistanceMin", GameRules.Category.PLAYER, GameRuleFactory.createDoubleRule(4.0D));
-        ruleDistanceMax = GameRuleRegistry.register("leashPlayersDistanceMax", GameRules.Category.PLAYER, GameRuleFactory.createDoubleRule(10.0D));
+    public LeashPlayers() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
+    }
+
+    private void onCommonSetup(FMLCommonSetupEvent event) {
+        ruleEnabled = AccessorGameRules.callRegister("leashPlayersEnabled", GameRules.Category.PLAYER, AccessorGameRules$BooleanRule.callCreate(true));
+        ruleDistanceMin = AccessorGameRules.callRegister("leashPlayersDistanceMin", GameRules.Category.PLAYER, AccessorGameRules$IntRule.callCreate(4));
+        ruleDistanceMax = AccessorGameRules.callRegister("leashPlayersDistanceMax", GameRules.Category.PLAYER, AccessorGameRules$IntRule.callCreate(10));
     }
 }

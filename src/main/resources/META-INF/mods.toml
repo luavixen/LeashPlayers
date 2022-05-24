@@ -1,0 +1,32 @@
+modLoader = "javafml"
+loaderVersion = "[37,)"
+
+license = "MIT"
+
+issueTrackerURL = "https://github.com/luavixen/LeashPlayers/issues"
+
+[[mods]]
+modId = "leashplayers"
+version = "${version}"
+
+displayName = "Leash Players"
+displayURL = "https://github.com/luavixen/LeashPlayers"
+
+authors = "luavixen"
+description = "Allows players to leash other players."
+
+logoFile = "leashplayers-icon.png"
+
+[[dependencies.leashplayers]]
+modId = "forge"
+mandatory = true
+versionRange = "[37,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.leashplayers]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.17,)"
+ordering = "NONE"
+side = "BOTH"

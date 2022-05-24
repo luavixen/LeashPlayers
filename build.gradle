@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10.+'
+    id 'dev.architectury.loom' version '0.12.0-SNAPSHOT'
 }
 
 group = project.mod_group
@@ -7,11 +7,28 @@ archivesBaseName = project.mod_name
 
 version = project.mod_version
 
+loom {
+    forge {
+        mixinConfigs = [
+            'leashplayers.mixins.json'
+        ]
+
+        dataGen {
+            mod project.mod_name
+        }
+    }
+
+    launches {
+        data {
+            arg '--existing', file('src/main/resources').absolutePath
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_version}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    forge "net.minecraftforge:forge:${project.forge_version}"
 }
 
 compileJava {
@@ -25,8 +42,24 @@ java {
     withSourcesJar()
 }
 
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'     : project.mod_name,
+            'Specification-Vendor'    : 'luavixen',
+            'Specification-Version'   : '1',
+            'Implementation-Title'    : 'Leash Players',
+            'Implementation-Version'  : project.mod_version,
+            'Implementation-Vendor'   : 'luavixen',
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
 processResources {
-    filesMatching('fabric.mod.json') {
-        expand 'version': version
+    inputs.property 'version', project.mod_version
+
+    filesMatching('META-INF/mods.toml') {
+        expand 'version': project.mod_version
     }
 }
