@@ -43,15 +43,15 @@ public final class LeashProxyEntity extends TurtleEntity {
     }
 
     public boolean proxyIsRemoved() {
-        return this.isRemoved();
+        return this.removed;
     }
 
     public void proxyRemove() {
-        super.remove(RemovalReason.DISCARDED);
+        super.remove();
     }
 
     @Override
-    public void remove(RemovalReason reason) {
+    public void remove() {
     }
 
     public static final String TEAM_NAME = "leashplayersimpl";

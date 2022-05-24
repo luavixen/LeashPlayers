@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[37,)"
+loaderVersion = "[32,)"
 
 license = "MIT"
 
@@ -20,13 +20,13 @@ logoFile = "leashplayers-icon.png"
 [[dependencies.leashplayers]]
 modId = "forge"
 mandatory = true
-versionRange = "[37,)"
+versionRange = "[32,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.leashplayers]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.17,)"
+versionRange = "[1.16,1.17)"
 ordering = "NONE"
 side = "BOTH"
