@@ -68,7 +68,7 @@ public final class LeashProxyEntity extends TurtleEntity {
         setInvisible(true);
         noClip = true;
 
-        MinecraftServer server = this.getServer();
+        MinecraftServer server = getServer();
         if (server != null) {
             ServerScoreboard scoreboard = server.getScoreboard();
 

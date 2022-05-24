@@ -5,7 +5,7 @@
     "version": "${version}",
 
     "depends": {
-        "java": ">=16",
+        "java": ">=8",
         "minecraft": ">=1.17",
         "fabricloader": ">=0.11",
         "fabric": "*"
